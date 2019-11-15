@@ -54,7 +54,7 @@ public class VisitsServiceImpl implements VisitsService {
         LocalDate localDate = LocalDate.now();
         Visits visits = visitsRepository.findByDate(localDate.toString());
         visits.setPvCounts(visits.getPvCounts()+1);
-        long ipCounts = logRepository.findIp(localDate.toString(), localDate.plusDays(1).toString());
+        long ipCounts = logRepository.findIp(localDate , localDate.plusDays(1) );
         visits.setIpCounts(ipCounts);
         visitsRepository.save(visits);
     }
@@ -64,7 +64,7 @@ public class VisitsServiceImpl implements VisitsService {
         Map<String,Object> map = new HashMap<>();
         LocalDate localDate = LocalDate.now();
         Visits visits = visitsRepository.findByDate(localDate.toString());
-        List<Visits> list = visitsRepository.findAllVisits(localDate.minusDays(6).toString(),localDate.plusDays(1).toString());
+        List<Visits> list = visitsRepository.findAllVisits(localDate.minusDays(6) ,localDate.plusDays(1) );
 
         long recentVisits = 0, recentIp = 0;
         for (Visits data : list) {
@@ -82,7 +82,7 @@ public class VisitsServiceImpl implements VisitsService {
     public Object getChartData() {
         Map<String,Object> map = new HashMap<>();
         LocalDate localDate = LocalDate.now();
-        List<Visits> list = visitsRepository.findAllVisits(localDate.minusDays(6).toString(),localDate.plusDays(1).toString());
+        List<Visits> list = visitsRepository.findAllVisits(localDate.minusDays(6),localDate.plusDays(1));
         map.put("weekDays",list.stream().map(Visits::getWeekDay).collect(Collectors.toList()));
         map.put("visitsData",list.stream().map(Visits::getPvCounts).collect(Collectors.toList()));
         map.put("ipData",list.stream().map(Visits::getIpCounts).collect(Collectors.toList()));

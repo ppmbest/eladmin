@@ -7,6 +7,7 @@ import me.zhengjie.domain.vo.ColumnInfo;
 import me.zhengjie.exception.BadRequestException;
 import me.zhengjie.service.GenConfigService;
 import me.zhengjie.service.GeneratorService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import java.util.List;
 @Api(tags = "系统：代码生成管理")
 public class GeneratorController {
 
+    @Qualifier("pgGeneratorService")
     private final GeneratorService generatorService;
 
     private final GenConfigService genConfigService;
@@ -29,11 +31,12 @@ public class GeneratorController {
     @Value("${generator.enabled}")
     private Boolean generatorEnabled;
 
-    public GeneratorController(GeneratorService generatorService, GenConfigService genConfigService) {
+    public GeneratorController(@Qualifier("pgGeneratorService ") GeneratorService generatorService, GenConfigService genConfigService) {
         this.generatorService = generatorService;
         this.genConfigService = genConfigService;
-    }
-
+    } 
+    
+    
     @ApiOperation("查询数据库元数据")
     @GetMapping(value = "/tables")
     public ResponseEntity getTables(@RequestParam(defaultValue = "") String name,

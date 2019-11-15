@@ -29,7 +29,8 @@ public class EmailConfig implements Serializable {
 
     // 发件者用户名，默认为发件人邮箱前缀
     @NotBlank
-    private String user;
+    @Column(name = "username")
+    private String username;
 
     @NotBlank
     private String pass;

@@ -30,7 +30,7 @@ public class Menu implements Serializable {
     @NotBlank
     private String name;
 
-    @Column(unique = true)
+    @Column()//unique = true
     private Long sort = 999L;
 
     @Column(name = "path")
@@ -46,15 +46,15 @@ public class Menu implements Serializable {
     @Column(name = "permission")
     private String permission;
 
-    @Column(unique = true,name = "component_name")
+    @Column(name = "component_name") //unique = true,
     private String componentName;
 
     private String icon;
 
-    @Column(columnDefinition = "bit(1) default 0")
+//    @Column(columnDefinition = " default 0")
     private Boolean cache;
 
-    @Column(columnDefinition = "bit(1) default 0")
+//    @Column(columnDefinition = " default 0")
     private Boolean hidden;
 
     // 上级菜单ID
